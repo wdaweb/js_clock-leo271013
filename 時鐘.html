@@ -7,13 +7,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
-    * {
+    *,
+    *::before,
+    *::after {
       margin: 0;
       padding: 0;
       font-size: 0;
     }
 
     body {
+      width: 100%;
       background: radial-gradient(rgb(162, 0, 255), salmon 10%, rgb(39, 201, 147) 20%, rgb(162, 0, 255) 30%, salmon 40%, rgb(39, 201, 147) 50%, rgb(162, 0, 255) 60%, salmon 70%, rgb(39, 201, 147) 80%, rgb(162, 0, 255) 90%, salmon);
       animation-name: ani;
       animation-duration: .4s;
@@ -35,6 +38,13 @@
       position: relative;
     }
 
+    #clock2 {
+      width: 512px;
+      height: 512px;
+      position: relative;
+      left: 15%;
+    }
+
     #h {
       background: url(./pic/eye.png)no-repeat center;
       width: 74px;
@@ -43,6 +53,17 @@
       top: 160px;
       left: 225px;
       transform-origin: left center;
+    }
+
+    #hh {
+      background: url(./pic/eye.png)no-repeat center;
+      width: 74px;
+      height: 30px;
+      position: absolute;
+      top: 160px;
+      left: 225px;
+      transform-origin: left center;
+      transform: rotate(-90deg);
     }
 
     #m {
@@ -55,6 +76,17 @@
       transform-origin: left center;
     }
 
+    #mm {
+      background: url(./pic/eye.png)no-repeat center;
+      width: 68px;
+      height: 30px;
+      position: absolute;
+      top: 200px;
+      left: 345px;
+      transform-origin: left center;
+      transform: rotate(-90deg);
+    }
+
     #s {
       background: url(./pic/ss.png)no-repeat center/cover;
       width: 360px;
@@ -63,6 +95,18 @@
       left: 275px;
       position: absolute;
       transform-origin: left center;
+    }
+
+    #ss {
+      background: url(./pic/ss.png)no-repeat center/cover;
+      width: 360px;
+      height: 47px;
+      top: 335px;
+      left: 275px;
+      position: absolute;
+      transform-origin: left center;
+      transform: rotate(-90deg);
+      visibility: hidden;
     }
 
     #fly {
@@ -78,7 +122,21 @@
       z-index: 1;
     }
 
-    @keyframes ani {
+    #flyy {
+      background: url(./pic/b662d6640105c661.png)no-repeat center;
+      width: 380px;
+      height: 47px;
+      top: 335px;
+      left: 275px;
+      position: absolute;
+      transform-origin: left center;
+      animation-duration: .1s;
+      animation-delay: .5s;
+      z-index: 1;
+      transform: rotate(-90deg);
+    }
+
+    /* @keyframes ani {
       from {
         background: radial-gradient(rgb(162, 0, 255), salmon 10%, rgb(39, 201, 147) 20%, rgb(162, 0, 255) 30%, salmon 40%, rgb(39, 201, 147) 50%, rgb(162, 0, 255) 60%, salmon 70%, rgb(39, 201, 147) 80%, rgb(162, 0, 255) 90%, salmon);
       }
@@ -90,7 +148,7 @@
       to {
         background: radial-gradient(rgb(162, 0, 255) 20%, salmon 30%, rgb(39, 201, 147) 40%, rgb(162, 0, 255) 50%, salmon 60%, rgb(39, 201, 147) 70%, rgb(162, 0, 255) 80%, salmon 90%, rgb(39, 201, 147) 100%, rgb(162, 0, 255) 10%, salmon);
       }
-    }
+    } */
 
     @keyframes ani1 {
       from {
@@ -110,6 +168,40 @@
       animation-direction: normal;
       animation-fill-mode: forwards;
     }
+
+    .arrow {
+      margin: auto;
+      width: 1px;
+      border-right: 45px solid transparent;
+      border-left: 45px solid transparent;
+      border-top: 46px solid rgba(227, 251, 8, 0.205);
+      position: relative;
+      bottom: 50px;
+    }
+
+    .arrow::after {
+      content: "";
+      margin: auto;
+      width: 1px;
+      border-right: 45px solid transparent;
+      border-left: 45px solid transparent;
+      border-bottom: 46px solid rgba(213, 236, 5, 0.329);
+      position: relative;
+      top: 50px;
+      left: -46px;
+    }
+
+    #input1 {
+      margin: auto;
+      position: relative;
+      font-size: 1rem;
+      left: 5%;
+    }
+
+    #input1 input {
+      width: 200px;
+      height: 20px;
+    }
   </style>
 </head>
 
@@ -123,8 +215,21 @@
       <div id="fly" class="ani1"></div>
     </div>
   </div>
+  <div class="arrow"></div>
   <div class="container">
+    <div id="clock2">
+      <img src="./pic/monster.png" alt="">
+      <div id="hh"></div>
+      <div id="mm"></div>
+      <div id="ss"></div>
+      <div id="flyy"></div>
+    </div>
+    <div id="input1">
+      <input type="text" value="" placeholder="請輸入秒數">
+    </div>
   </div>
+
+
 
   <script>
     const h = document.getElementById('h')
