@@ -16,12 +16,7 @@
 
     body {
       width: 100%;
-      background: radial-gradient(rgb(162, 0, 255), salmon 10%, rgb(39, 201, 147) 20%, rgb(162, 0, 255) 30%, salmon 40%, rgb(39, 201, 147) 50%, rgb(162, 0, 255) 60%, salmon 70%, rgb(39, 201, 147) 80%, rgb(162, 0, 255) 90%, salmon);
-      animation-name: ani;
-      animation-duration: .4s;
-      animation-iteration-count: infinite;
-      animation-direction: normal;
-      animation-timing-function: linear;
+      background: url(./pic/bg.jpg) repeat-y center/cover;
       font-size: 0;
     }
 
@@ -56,9 +51,9 @@
     }
 
     #hh {
-      background: url(./pic/eye.png)no-repeat center;
+      background: url(./pic/eye.png)no-repeat center/cover;
       width: 74px;
-      height: 30px;
+      height: 32px;
       position: absolute;
       top: 160px;
       left: 225px;
@@ -77,8 +72,8 @@
     }
 
     #mm {
-      background: url(./pic/eye.png)no-repeat center;
-      width: 68px;
+      background: url(./pic/eye.png)no-repeat center/cover;
+      width: 70px;
       height: 30px;
       position: absolute;
       top: 200px;
@@ -130,24 +125,10 @@
       left: 275px;
       position: absolute;
       transform-origin: left center;
-      animation-duration: .1s;
-      animation-delay: .5s;
       z-index: 1;
       transform: rotate(-90deg);
-    }
-
-    @keyframes ani {
-      from {
-        background: radial-gradient(rgb(162, 0, 255), salmon 10%, rgb(39, 201, 147) 20%, rgb(162, 0, 255) 30%, salmon 40%, rgb(39, 201, 147) 50%, rgb(162, 0, 255) 60%, salmon 70%, rgb(39, 201, 147) 80%, rgb(162, 0, 255) 90%, salmon);
-      }
-
-      50% {
-        background: radial-gradient(rgb(162, 0, 255) 10%, salmon 20%, rgb(39, 201, 147) 30%, rgb(162, 0, 255) 40%, salmon 50%, rgb(39, 201, 147) 60%, rgb(162, 0, 255) 70%, salmon 80%, rgb(39, 201, 147) 90%, rgb(162, 0, 255) 100%, salmon);
-      }
-
-      to {
-        background: radial-gradient(rgb(162, 0, 255) 20%, salmon 30%, rgb(39, 201, 147) 40%, rgb(162, 0, 255) 50%, salmon 60%, rgb(39, 201, 147) 70%, rgb(162, 0, 255) 80%, salmon 90%, rgb(39, 201, 147) 100%, rgb(162, 0, 255) 10%, salmon);
-      }
+      animation-duration: .1s;
+      animation-delay: .5s;
     }
 
     @keyframes ani1 {
@@ -174,7 +155,7 @@
       width: 1px;
       border-right: 45px solid transparent;
       border-left: 45px solid transparent;
-      border-top: 46px solid rgba(227, 251, 8, 0.205);
+      border-top: 46px solid rgba(25, 156, 243, 0.425);
       position: relative;
       bottom: 50px;
     }
@@ -185,7 +166,7 @@
       width: 1px;
       border-right: 45px solid transparent;
       border-left: 45px solid transparent;
-      border-bottom: 46px solid rgba(213, 236, 5, 0.329);
+      border-bottom: 46px solid rgba(243, 25, 225, 0.425);
       position: relative;
       top: 50px;
       left: -46px;
@@ -201,6 +182,44 @@
     #input1 input {
       text-align: center;
       font-size: 1.5rem;
+    }
+
+    .animate {
+      animation-name: animate;
+      animation-duration: .5s;
+      animation-timing-function: cubic-bezier(0.87, 0, 0.13, 1);
+    }
+
+    @keyframes animate {
+      from {
+        visibility: visible;
+        width: 0;
+      }
+
+      50% {
+        width: 360px;
+        background: url(./pic/ssb.png)no-repeat center/cover;
+      }
+
+      to {
+        width: 0px;
+        visibility: hidden;
+      }
+    }
+
+    .animate1 {
+      visibility: hidden;
+    }
+
+    #lightning {
+      background: url(./pic/lightning.png);
+      position: absolute;
+      width: 900px;
+      height: 249px;
+      top: 105px;
+      left: -265px;
+      z-index: -1;
+      visibility: hidden;
     }
   </style>
 </head>
@@ -223,6 +242,7 @@
       <div id="mm"></div>
       <div id="ss"></div>
       <div id="flyy"></div>
+      <div id="lightning"></div>
     </div>
     <div id="input1">
       <input type="text" placeholder="請輸入想倒數的秒數" id="sec">
@@ -230,15 +250,19 @@
     </div>
   </div>
 
-
-
   <script>
     const h = document.getElementById('h')
     const m = document.getElementById('m')
     const s = document.getElementById('s')
+    const hh = document.getElementById('hh')
+    const mm = document.getElementById('mm')
+    const ss = document.getElementById('ss')
     const btn1 = document.getElementById('btn1')
     const sec = document.getElementById('sec')
-
+    const lightning = document.getElementById('lightning')
+    const audio = new Audio()
+    audio.src = './pic/time.mp3'
+    audio.preload = 'auto'
 
     const clock = () => {
       const now = new Date()
@@ -252,21 +276,68 @@
 
     setInterval(clock, 1000)
 
+    sec.oninput = () => {
+      hh.style.top = "160px";
+      mm.style.top = "200px";
+      hh.style.width = "74px";
+      hh.style.height = "32px";
+      mm.style.width = "70px";
+      mm.style.height = "30px";
+
+      lightning.style.visibility = "hidden";
+
+      audio.pause();
+      audio.currentTime = 0;
+    }
+
     btn1.onclick = () => {
       let timer = setInterval(() => {
         (sec.value)--
 
+        ss.classList.remove('animate')
+        flyy.classList.remove('animate1')
+
         if (sec.value == 0) {
           // 時間到
+          ss.classList.add('animate')
+
+          audio.pause();
+          audio.currentTime = 0;
+
+          setTimeout(function () {
+            flyy.classList.add('animate1')
+          }, 200);
+
+          setTimeout(function () {
+            hh.style.top = "210px";
+            mm.style.top = "250px";
+          }, 600);
+
+          setTimeout(function () {
+            hh.style.width = "100px";
+            hh.style.height = "43px";
+            hh.style.top = "230px";
+
+            mm.style.width = "100px";
+            mm.style.height = "43px";
+            mm.style.top = "270px";
+
+            lightning.style.visibility = "visible";
+          }, 1000);
+
+          setTimeout(function () {
+            audio.play();
+          }, 1500);
+
           clearInterval(timer)
         }
       }, 1000)
+
       const clock2 = () => {
         hh.style.transform = `rotate(${6 * sec.value - 90}deg)`
         mm.style.transform = `rotate(${6 * sec.value - 90}deg)`
-        ss.style.transform = `rotate(${6 * sec.value - 90}deg)`
         flyy.style.transform = `rotate(${6 * sec.value - 90}deg)`
-
+        ss.style.transform = `rotate(${6 * sec.value - 90}deg)`
       }
 
       clock2()
