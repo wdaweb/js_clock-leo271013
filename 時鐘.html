@@ -264,6 +264,7 @@
     audio.src = './pic/time.mp3'
     audio.preload = 'auto'
 
+
     const clock = () => {
       const now = new Date()
       h.style.transform = `rotate(${30 * now.getHours() - 90}deg)`
@@ -327,6 +328,7 @@
 
           setTimeout(function () {
             audio.play();
+            audio.volume = 0.1;
           }, 1500);
 
           clearInterval(timer)
